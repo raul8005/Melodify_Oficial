@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Productor </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Productor</a>
+            <!-- Espaciador automático para empujar el botón al lado derecho -->
+            <div class="ms-auto">
+                <a href="{% url 'users:logout' %}" class="btn btn-danger">Cerrar Sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container text-center mt-5">
+        <h1 class="mb-4">Bienvenido, Productor ({{ user.email }})</h1>
+        <p>¡Conecta con músicos y colabora en proyectos increíbles!</p>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Buscar Músicos</h5>
+                        <p class="card-text">Conecta con músicos talentosos para tus próximos proyectos (mensajería).</p>
+                        <button class="btn btn-primary">Ir</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Tus Proyectos</h5>
+                        <p class="card-text">Gestiona y organiza tus proyectos musicales fácilmente.</p>
+                        <button class="btn btn-primary">Ir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
