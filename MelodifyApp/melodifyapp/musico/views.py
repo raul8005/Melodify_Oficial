@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Album, Song, Comment
-from .forms import AlbumForm, SongForm, CommentForm
+from .models import Album, Song, Comment, Message
+from .forms import AlbumForm, SongForm, CommentForm, MessageForm
 
 @login_required
 def create_album(request):
@@ -42,7 +42,7 @@ def add_comment(request, song_id):
             comment.user = request.user
             comment.song = song
             comment.save()
-            return redirect('musico:song_list')
+            return redirect('musico:song_list')  # Redirige a la lista de canciones
     else:
         form = CommentForm()
     return render(request, 'musico/add_comment.html', {'form': form, 'song': song})
@@ -51,3 +51,30 @@ def add_comment(request, song_id):
 def album_list(request):
     albums = Album.objects.filter(musician=request.user)
     return render(request, 'musico/album_list.html', {'albums': albums})
+
+@login_required
+def send_message(request):
+    if request.method == "POST":
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.save()
+            return redirect('musico:message_list')
+    else:
+        form = MessageForm()
+    return render(request, 'musico/send_message.html', {'form': form})
+
+@login_required
+def message_list(request):
+    messages = Message.objects.filter(recipient=request.user).order_by('-timestamp')
+    return render(request, 'musico/message_list.html', {'messages': messages})
+
+
+
+
+
+
+
+
+

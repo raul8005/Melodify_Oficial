@@ -1,5 +1,5 @@
 from django import forms
-from .models import Album, Song, Comment
+from .models import Album, Song, Comment, Message
 
 class AlbumForm(forms.ModelForm):
     class Meta:
@@ -15,3 +15,9 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['recipient', 'content']
+

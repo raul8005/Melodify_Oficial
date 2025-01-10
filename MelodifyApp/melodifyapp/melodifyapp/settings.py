@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'musico',
+    'oyente',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,7 @@ WSGI_APPLICATION = 'melodifyapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'melodify',                
+        'NAME': 'melodifyapp',                
         'USER': 'root',                       # Usuario en XAMPP
         'PASSWORD': '',                       
         'HOST': '127.0.0.1',                  # Servidor local (XAMPP)	

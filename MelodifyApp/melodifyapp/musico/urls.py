@@ -9,4 +9,6 @@ urlpatterns = [
     path('songs/', views.song_list, name='song_list'),
     path('songs/<int:song_id>/comment/', views.add_comment, name='add_comment'),
     path('album-list/', views.album_list, name='album_list'),
+    path('messages/', views.message_list, name='message_list'),
+    
 ]

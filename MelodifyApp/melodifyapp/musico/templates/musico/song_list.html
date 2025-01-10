@@ -22,13 +22,14 @@
             {% endfor %}
         </ul>
         <a href="{% url 'musico:create_album' %}" class="btn btn-success mb-4">Crear Álbum</a>
-        <a href="{% url 'musico:album_list' %}" class="btn btn-success mb-4"> Ver Álbumes</a>
+        <a href="{% url 'musico:album_list' %}" class="btn btn-success mb-4">Ver Álbumes</a>
 
         <h2>Canciones</h2>
         <ul class="list-group">
             {% for song in songs %}
             <li class="list-group-item">
                 {{ song.title }} - {{ song.album.title }}
+                <!-- Solo el enlace para ver/agregar comentarios -->
                 <a href="{% url 'musico:add_comment' song.id %}" class="btn btn-sm btn-info">Ver/Agregar Comentarios</a>
             </li>
             {% empty %}
