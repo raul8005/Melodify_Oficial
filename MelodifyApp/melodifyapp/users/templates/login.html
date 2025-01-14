@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="login-container">
-            <h2 class="login-title">Iniciar Sesión</h2>
+            <h2 class="login-title">Iniciar  Sesión</h2>
             {% if error %}
             <div class="alert alert-danger" role="alert">
                 {{ error }}
@@ -19,7 +19,7 @@
             <form method="POST">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <label for="email" class="form-label">Correo  Electrónico</label>
                     <input type="email" name="email" id="email" class="form-control" required 
                            placeholder="tucorreo@ejemplo.com">
                 </div>

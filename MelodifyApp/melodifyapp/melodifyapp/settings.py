@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'melodifyapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'melodifyapp',                
+        'NAME': 'melodifyp',                
         'USER': 'root',                       # Usuario en XAMPP
-        'PASSWORD': 'password',                       
+        'PASSWORD': '',                       
         'HOST': '127.0.0.1',                  # Servidor local (XAMPP)	
         'PORT': '3306',                       # Puerto de MySQL
     }
