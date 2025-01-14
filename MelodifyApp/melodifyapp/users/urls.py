@@ -13,4 +13,5 @@ urlpatterns = [
     path('oyente/', views.oyente_dashboard, name='oyente_dashboard'),
     path('productor/', views.productor_dashboard, name='productor_dashboard'),
     path('logout/', views.logout_view, name='logout'),
+    path('songs/', views.buscar_artista, name='song_list'),
 ]

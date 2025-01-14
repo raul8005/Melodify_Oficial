@@ -6,6 +6,7 @@ class Album(models.Model):
     title = models.CharField(max_length=100)
     musician = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="albums")
     release_date = models.DateField()
+    cover_image = models.ImageField(upload_to='album_covers/', blank=True, null=True)  # Added cover_image field
 
     def __str__(self):
         return self.title
@@ -36,3 +37,17 @@ class Message(models.Model):
 
     def __str__(self):
         return f"Message from {self.sender} to {self.recipient} at {self.timestamp}"
+
+class LikeDislike(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    song = models.ForeignKey('musico.Song', on_delete=models.CASCADE)  # Evita referencias circulares
+    LIKE = 1
+    DISLIKE = -1
+    CHOICES = (
+        (LIKE, 'Like'),
+        (DISLIKE, 'Dislike'),
+    )
+    vote = models.SmallIntegerField(choices=CHOICES)
+
+    class Meta:
+        unique_together = ('user', 'song')  # Un usuario solo puede votar una vez por canci�n

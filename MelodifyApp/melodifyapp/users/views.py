@@ -2,16 +2,16 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+
+from musico.models import Song
 from .forms import UserCreationForm
 from .models import User
 from .decorators import user_type_required
-
 
 # Vista de inicio
 def inicio(request):
     """Página de inicio."""
     return render(request, 'home.html')
-
 
 # Vista de registro de usuario
 def register_view(request):
@@ -28,7 +28,6 @@ def register_view(request):
         form = UserCreationForm()  # Crear una instancia vacía del formulario
     return render(request, 'register.html', {'form': form})
 
-
 # Vista de inicio de sesión
 def login_view(request):
     """Autentica al usuario y redirige al dashboard correspondiente."""
@@ -39,7 +38,6 @@ def login_view(request):
 
         if user:
             login(request, user)
-            # Redirige directamente al dashboard según el rol del usuario
             return redirect('users:redirect_dashboard')
         else:
             messages.error(request, "Credenciales incorrectas. Inténtalo nuevamente.")
@@ -54,7 +52,6 @@ def logout_view(request):
     return redirect('users:login')
 
 
-# Redirige al dashboard correspondiente según el tipo de usuario
 @login_required
 def redirect_dashboard(request):
     """Redirige al dashboard según el tipo de usuario."""
@@ -69,28 +66,32 @@ def redirect_dashboard(request):
         return redirect(dashboard_url)
     else:
         messages.error(request, "Tu rol no está definido correctamente.")
-        return redirect('users:login')  # Redirigir al login si no tiene rol definido
-
+        return redirect('users:login')  
 
 # Dashboard de músico
 @login_required
-@user_type_required('M')  # Decorador para verificar el tipo de usuario
+@user_type_required('M')
 def musico_dashboard(request):
     """Dashboard para músicos."""
     return render(request, 'musico_dashboard.html')
 
-
 # Dashboard de oyente
 @login_required
-@user_type_required('O')  # Decorador para verificar el tipo de usuario
+@user_type_required('O')  
 def oyente_dashboard(request):
     """Dashboard para oyentes."""
     return render(request, 'oyente_dashboard.html')
 
-
 # Dashboard de productor
 @login_required
-@user_type_required('P')  # Decorador para verificar el tipo de usuario
+@user_type_required('P')  
 def productor_dashboard(request):
     """Dashboard para productores."""
     return render(request, 'productor_dashboard.html')
+
+# Vista de listar canciones productor
+@login_required
+def buscar_artista(request):
+    """Vista para listar las canciones."""
+    songs = Song.objects.all()  
+    return render(request, 'oyente/buscar_artista.html', {'songs': songs})

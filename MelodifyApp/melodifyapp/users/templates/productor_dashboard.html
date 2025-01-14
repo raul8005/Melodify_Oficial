@@ -18,7 +18,7 @@
     </nav>
 
     <div class="container text-center mt-5">
-        <h1 class="mb-4">Bienvenido, Productor ({{ user.email }})</h1>
+        <h1 class="mb-4">Bienvenido, Productor <strong>{{ user.first_name }}</strong></h1>
         <p>¡Conecta con músicos y colabora en proyectos increíbles!</p>
 
         <div class="row mt-4">
@@ -27,17 +27,18 @@
                     <div class="card-body">
                         <h5 class="card-title">Buscar Músicos</h5>
                         <p class="card-text">Conecta con músicos talentosos para tus próximos proyectos (mensajería).</p>
-                        
-                        <button class="btn btn-primary">Ir</button>
+                        <a href="{% url 'users:song_list' %}" class="btn btn-primary">Ir</a>
                     </div>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Tus Proyectos</h5>
                         <p class="card-text">Gestiona y organiza tus proyectos musicales fácilmente.</p>
-                        <button class="btn btn-primary">Ir</button>
+                        <a href="#" class="btn btn-primary">Crear Proyecto</a>
+                        <a href="#" class="btn btn-secondary">Ver Proyectos</a>
                     </div>
                 </div>
             </div>

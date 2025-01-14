@@ -17,7 +17,7 @@
     </nav>
 
     <div class="container text-center mt-5">
-        <h1 class="mb-4">Bienvenido, Oyente ({{ user.email }})</h1>
+        <h1 class="mb-4">Bienvenido, Oyente  <strong>{{ user.first_name }}</strong></h1>
 
         <div class="row mt-4 justify-content-center">
             <div class="col-md-6">
@@ -26,7 +26,17 @@
                         <h5 class="card-title">Escuchar Demos</h5>
                         <p class="card-text">Aquí puedes escuchar demos y disfrutar de buena música.</p>
                         <a href="{% url 'oyente:search_artist' %}" class="btn btn-primary">Ir</a>
-
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Ver Artistas</h5>
+                        <p class="card-text">Aquí puedes escuchar demos y disfrutar de buena música.</p>
+                        <a href="{% url 'musico:artist_list' %}" class="btn btn-primary">Ir</a>
                     </div>
                 </div>
             </div>

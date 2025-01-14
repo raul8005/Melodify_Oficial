@@ -28,9 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
-
+# Application definition    
 INSTALLED_APPS = [
     'users',
     'django.contrib.admin',
@@ -58,7 +56,7 @@ ROOT_URLCONF = 'melodifyapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'melodifyapp',                
         'USER': 'root',                       # Usuario en XAMPP
-        'PASSWORD': '',                       
+        'PASSWORD': 'password',                       
         'HOST': '127.0.0.1',                  # Servidor local (XAMPP)	
         'PORT': '3306',                       # Puerto de MySQL
     }
@@ -140,5 +138,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #manejar los archivos de música y otros archivos estáticos
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-#

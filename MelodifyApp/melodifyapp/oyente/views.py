@@ -1,23 +1,35 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-from musico.models import Song, Album, User
+from musico.models import Song, Album, LikeDislike
+from users.models import User
+from users.models import Follow
 from .forms import SearchForm
+from django.contrib.auth.decorators import login_required
 
 def search_artist(request):
+    """Vista para buscar artistas, canciones o álbumes."""
+    form = SearchForm(request.GET or None)
     results = []
-    query = request.GET.get('query', '').strip()  # Asegúrate de manejar valores vacíos o espacios
+    query = ""
 
-    if query:
-        # Busca canciones asociadas a músicos cuyo username coincida parcialmente
-        results = Song.objects.filter(album__musician__username__icontains=query)
-
+    if form.is_valid():
+        print(form.cleaned_data)
+        query = form.cleaned_data['query']
+        print(query)
+        results = Song.objects.filter(
+            Q(title__icontains=query) |
+            Q(album__title__icontains=query)
+        ).distinct()
+        print(results)
     return render(request, 'oyente/buscar_artista.html', {
-        'form': SearchForm(),
+        'form': form,
         'results': results,
         'query': query,
     })
 
+
 def comment_song(request, song_id):
-    from musico.models import Comment, Song  # Evitar dependencias cruzadas innecesarias
+    from musico.models import Comment, Song
     from musico.forms import CommentForm
 
     song = Song.objects.get(id=song_id)
@@ -28,8 +40,54 @@ def comment_song(request, song_id):
             comment.user = request.user
             comment.song = song
             comment.save()
-            return redirect('oyente:search_artist')
+            return redirect('oyente:reproduce_music', song_id=song_id)
     else:
         form = CommentForm()
 
-    return render(request, 'oyente/comentar_cancion.html', {'form': form, 'song': song})
+    return render(request, 'musico/add_comment.html', {'form': form, 'song': song})
+
+def reproduce_music(request, song_id):
+    song = get_object_or_404(Song, id=song_id)
+
+    user_vote = None
+    if request.user.is_authenticated:
+        vote = LikeDislike.objects.filter(user=request.user, song=song).first()
+        if vote:
+            user_vote = 'like' if vote.vote == LikeDislike.LIKE else 'dislike'
+
+    return render(request, 'oyente/reproductor_musica.html', {
+        'song': song,
+        'user_vote': user_vote,
+    })
+def like_song(request, song_id):
+    song = get_object_or_404(Song, id=song_id)
+    like, created = LikeDislike.objects.get_or_create(user=request.user, song=song, defaults={'vote': LikeDislike.LIKE})
+    if not created and like.vote == LikeDislike.LIKE:
+        like.delete()
+    elif not created:
+        like.vote = LikeDislike.LIKE
+        like.save()
+    return redirect('oyente:reproduce_music', song_id=song.id)
+
+def dislike_song(request, song_id):
+    song = get_object_or_404(Song, id=song_id)
+    dislike, created = LikeDislike.objects.get_or_create(user=request.user, song=song, defaults={'vote': LikeDislike.DISLIKE})
+    if not created and dislike.vote == LikeDislike.DISLIKE:
+        dislike.delete()
+    elif not created:
+        dislike.vote = LikeDislike.DISLIKE
+        dislike.save()
+    return redirect('oyente:reproduce_music', song_id=song.id)
+
+@login_required
+def album_list_oyente(request):
+    albums = Album.objects.all().prefetch_related('songs', 'artist')
+    return render(request, 'musico/album_list_oyente.html', {'albums': albums})
+
+def album_detail_oyente(request, album_id):
+    album = get_object_or_404(Album, id=album_id)
+    songs = album.songs.all()
+    return render(request, 'oyente/album_detail_oyente.html', {
+        'album': album,
+        'songs': songs,
+    })
