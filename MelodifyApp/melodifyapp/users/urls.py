@@ -14,4 +14,7 @@ urlpatterns = [
     path('productor/', views.productor_dashboard, name='productor_dashboard'),
     path('logout/', views.logout_view, name='logout'),
     path('songs/', views.buscar_artista, name='song_list'),
+    path('update/', views.update_profile, name='update_profile'),
+    path('profile/', views.profile, name='profile'),
+    path('delete_account/', views.delete_account, name='delete_account'),  
 ]

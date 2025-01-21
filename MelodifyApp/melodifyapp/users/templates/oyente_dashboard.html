@@ -11,8 +11,8 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Oyente</a>
             <div class="ms-auto">
-                <a href="{% url 'users:logout' %}" class="btn btn-danger">Cerrar Sesión</a>
-            </div>
+                <a href="{% url 'users:profile' %}" class="btn btn-info">Mi Perfil</a>
+            <a href="{% url 'users:logout' %}" class="btn btn-danger">Cerrar Sesión</a>            </div>
         </div>
     </nav>
 
@@ -37,6 +37,17 @@
                         <h5 class="card-title">Ver Artistas</h5>
                         <p class="card-text">Aquí puedes escuchar demos y disfrutar de buena música.</p>
                         <a href="{% url 'musico:artist_list' %}" class="btn btn-primary">Ir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Canciones Favoritas</h5>
+                        <p class="card-text">Revisa las canciones que te han gustado.</p>
+                        <a href="{% url 'oyente:liked_songs' %}" class="btn btn-primary">Ir</a>
                     </div>
                 </div>
             </div>

@@ -91,3 +91,7 @@ def album_detail_oyente(request, album_id):
         'album': album,
         'songs': songs,
     })
+@login_required
+def liked_songs(request):
+    liked_songs = Song.objects.filter(likedislike__user=request.user, likedislike__vote=LikeDislike.LIKE).distinct()
+    return render(request, 'oyente/liked_songs.html', {'liked_songs': liked_songs})

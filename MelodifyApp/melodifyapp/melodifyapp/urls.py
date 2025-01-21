@@ -14,6 +14,7 @@ urlpatterns = [
     path('musico/', include('musico.urls')), 
     path('', lambda request: redirect('users:login')),  # Redirigir a la página de login
     path('oyente/', include('oyente.urls', namespace='oyente')),
+    path('productor/', include('productor.urls', namespace='productor')),
 ]
 
 

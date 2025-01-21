@@ -198,3 +198,4 @@ def follow_artist(request, artist_id):
     if not created:
         seguimiento.delete()
     return redirect('musico:artist_list')
+

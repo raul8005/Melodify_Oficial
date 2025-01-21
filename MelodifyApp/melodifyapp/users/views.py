@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from musico.models import Song
-from .forms import UserCreationForm
+from .forms import UserCreationForm, UserUpdateForm
 from .models import User
 from .decorators import user_type_required
 
@@ -95,3 +95,29 @@ def buscar_artista(request):
     """Vista para listar las canciones."""
     songs = Song.objects.all()  
     return render(request, 'oyente/buscar_artista.html', {'songs': songs})
+
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('users:profile')
+    else:
+        form = UserUpdateForm(instance=request.user)
+    return render(request, 'update_profile.html', {'form': form})
+
+@login_required
+def profile(request):
+    return render(request, 'profile.html')
+
+@login_required
+def delete_account(request):
+    """Vista para eliminar la cuenta del usuario."""
+    if request.method == 'POST':
+        user = request.user
+        logout(request)  # Cerrar sesión antes de eliminar
+        user.delete()
+        messages.success(request, "Tu cuenta ha sido eliminada exitosamente.")
+        return redirect('users:inicio')
+    return render(request, 'confirm_delete.html')

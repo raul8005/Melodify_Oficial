@@ -50,4 +50,22 @@ class LikeDislike(models.Model):
     vote = models.SmallIntegerField(choices=CHOICES)
 
     class Meta:
-        unique_together = ('user', 'song')  # Un usuario solo puede votar una vez por canci�n
+        unique_together = ('user', 'song') 
+class Favorite(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,  
+        on_delete=models.CASCADE,
+        related_name='favorites'
+    )
+    song = models.ForeignKey(
+        'musico.Song',
+        on_delete=models.CASCADE,
+        related_name='favorited_by'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'song')
+
+    def __str__(self):
+        return f"{self.user.first_name} - {self.song.title}"
