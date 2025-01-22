@@ -116,7 +116,7 @@
     <div class="container">
         <div class="song-player-card">
             <!-- Imagen de la canción -->
-            <img src="{% static 'img/default_song.jpg' %}" alt="Imagen de la canción">
+            <img src="{% if song.song_cover %}{{ song.song_cover.url }}{% else %}{% static 'img/default_song.jpg' %}{% endif %}" alt="{{ favorite.song.title }}">        
 
             <!-- Detalles y reproductor -->
             <div class="song-details">

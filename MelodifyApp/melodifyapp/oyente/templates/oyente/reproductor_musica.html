@@ -103,8 +103,7 @@
 <div class="container">
     <div class="song-player-card">
         <!-- Imagen de la canción -->
-        <img src="{% static 'img/default_song.jpg' %}" alt="Imagen de la canción">
-
+        <img src="{% if song.song_cover %}{{ song.song_cover.url }}{% else %}{% static 'img/default_song.jpg' %}{% endif %}" alt="Imagen de la canción">
         <!-- Detalles y reproductor -->
         <div class="song-details">
             <h3>{{ song.title }}</h3>
@@ -113,7 +112,14 @@
                 <strong>Artista:</strong> {{ song.album.musician.first_name }} {{ song.album.musician.last_name }}<br>
                 <strong>Duración:</strong> {{ song.duration }} segundos
             </p>
-
+            <form method="post" action="{% url 'musico:follow_artist' song.album.musician.id %}">
+                {% csrf_token %}
+                {% if song.album.musician.id in following_ids %}
+                    <button type="submit" class="btn btn-danger follow-btn">Dejar de Seguir</button>
+                {% else %}
+                    <button type="submit" class="btn btn-primary follow-btn">Seguir</button>
+                {% endif %}
+            </form>
             <!-- Reproductor -->
             <div class="player">
                 <audio controls>

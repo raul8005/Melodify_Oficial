@@ -13,14 +13,16 @@ def search_artist(request):
     query = ""
 
     if form.is_valid():
-        print(form.cleaned_data)
         query = form.cleaned_data['query']
-        print(query)
         results = Song.objects.filter(
             Q(title__icontains=query) |
-            Q(album__title__icontains=query)
+            Q(album__title__icontains=query) |
+            Q(album__musician__first_name__icontains=query) &
+            Q(album__musician__last_name__icontains=query) |
+            Q(album__musician__first_name__icontains=query) |
+            Q(album__musician__last_name__icontains=query) 
         ).distinct()
-        print(results)
+
     return render(request, 'oyente/buscar_artista.html', {
         'form': form,
         'results': results,
@@ -46,8 +48,12 @@ def comment_song(request, song_id):
 
     return render(request, 'musico/add_comment.html', {'form': form, 'song': song})
 
+@login_required
 def reproduce_music(request, song_id):
     song = get_object_or_404(Song, id=song_id)
+
+    # Obtener los IDs de los artistas que el usuario está siguiendo
+    following_ids = Follow.objects.filter(follower=request.user).values_list('following_id', flat=True)
 
     user_vote = None
     if request.user.is_authenticated:
@@ -58,6 +64,7 @@ def reproduce_music(request, song_id):
     return render(request, 'oyente/reproductor_musica.html', {
         'song': song,
         'user_vote': user_vote,
+        'following_ids': list(following_ids),  # Añadido
     })
 def like_song(request, song_id):
     song = get_object_or_404(Song, id=song_id)

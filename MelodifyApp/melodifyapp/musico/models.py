@@ -6,7 +6,7 @@ class Album(models.Model):
     title = models.CharField(max_length=100)
     musician = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="albums")
     release_date = models.DateField()
-    cover_image = models.ImageField(upload_to='album_covers/', blank=True, null=True)  # Added cover_image field
+    cover_image = models.ImageField(upload_to='album_covers/', blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -15,6 +15,7 @@ class Song(models.Model):
     title = models.CharField(max_length=100)
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name="songs")
     file = models.FileField(upload_to="musico/songs/")
+    song_cover = models.ImageField(upload_to='song_covers/', blank=True, null=True)
     duration = models.PositiveIntegerField()
 
     def __str__(self):

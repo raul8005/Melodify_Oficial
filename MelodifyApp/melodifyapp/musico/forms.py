@@ -12,11 +12,13 @@ class AlbumForm(forms.ModelForm):
 class SongForm(forms.ModelForm):
     class Meta:
         model = Song
-        fields = ['title', 'duration', 'file']
+        fields = ['title', 'file', 'song_cover', 'duration']
         widgets = {
-            'duration': forms.NumberInput(attrs={'min': 0}),
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'file': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'song_cover': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'duration': forms.NumberInput(attrs={'class': 'form-control'}),
         }
-
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment

@@ -185,11 +185,6 @@ def delete_song(request, song_id):
     return render(request, 'musico/delete_song.html', {'song': song})
 
 
-# Seguir Artistas 
-@login_required
-def artist_list(request):
-    artistas = User.objects.filter(user_type='M')
-    return render(request, 'musico/artist_list.html', {'artistas': artistas})
 
 @login_required
 def follow_artist(request, artist_id):
@@ -197,5 +192,11 @@ def follow_artist(request, artist_id):
     seguimiento, created = Follow.objects.get_or_create(follower=request.user, following=artista)
     if not created:
         seguimiento.delete()
-    return redirect('musico:artist_list')
+    return redirect('musico:following_artists')
 
+@login_required
+def following_artists(request):
+    seguimientos = Follow.objects.filter(follower=request.user).select_related('following')
+    return render(request, 'musico/following_artists.html', {
+        'seguimientos': seguimientos,
+    })

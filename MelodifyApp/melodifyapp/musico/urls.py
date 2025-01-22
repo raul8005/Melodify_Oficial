@@ -18,7 +18,7 @@ urlpatterns = [
     path('comments-received/', views.comments_received, name='comments_received'),
 
     path('song/<int:song_id>/', views.song_detail, name='song_detail'),
-    path('artistas/', views.artist_list, name='artist_list'),
     path('seguir-artista/<int:artist_id>/', views.follow_artist, name='follow_artist'),
+    path('artistas-seguidos/', views.following_artists, name='following_artists'),
 
 ]

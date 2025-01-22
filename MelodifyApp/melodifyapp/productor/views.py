@@ -17,10 +17,14 @@ def search_song_productor(request):
         query = form.cleaned_data['query']
         results = Song.objects.filter(
             Q(title__icontains=query) |
-            Q(album__title__icontains=query)
+            Q(album__title__icontains=query) |
+            Q(album__musician__first_name__icontains=query) &
+            Q(album__musician__last_name__icontains=query) |
+            Q(album__musician__first_name__icontains=query) |
+            Q(album__musician__last_name__icontains=query) 
         ).distinct()
 
-    return render(request, 'productor/buscar_artista_productor.html', {
+    return render(request, 'oyente/buscar_artista_productor.html', {
         'form': form,
         'results': results,
         'query': query,

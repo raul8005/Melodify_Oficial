@@ -37,6 +37,7 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'users:oyente_dashboard' %}">Oyente</a>
             <div class="ms-auto">
+                <a href="{% url 'musico:following_artists' %}" class="btn btn-primary me-2">Artistas Seguidos</a>
                 <a href="{% url 'users:profile' %}" class="btn btn-info">Mi Perfil</a>
             <a href="{% url 'users:logout' %}" class="btn btn-danger">Cerrar Sesión</a>            </div>
         </div>
@@ -68,14 +69,6 @@
                                     <li>No tiene álbumes.</li>
                                 {% endfor %}
                             </ul>
-                            <form method="post" action="{% url 'musico:follow_artist' artista.id %}">
-                                {% csrf_token %}
-                                {% if artista.id in following_ids %}
-                                    <button type="submit" class="btn btn-danger follow-btn">Dejar de Seguir</button>
-                                {% else %}
-                                    <button type="submit" class="btn btn-primary follow-btn">Seguir</button>
-                                {% endif %}
-                            </form>
                         </div>
                     </div>
                 </div>

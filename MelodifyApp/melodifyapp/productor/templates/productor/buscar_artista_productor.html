@@ -96,8 +96,7 @@
                         <!-- Tarjeta de canción -->
                         <div class="song-card">
                             <!-- Imagen predeterminada -->
-                            <img src="{% static 'img/default_song.jpg' %}" alt="Imagen de la canción">
-    
+                            <img src="{% if song.song_cover %}{{ song.song_cover.url }}{% else %}{% static 'img/default_song.jpg' %}{% endif %}" alt="Imagen de la canción">        
                             <!-- Detalles de la canción -->
                             <div class="song-details">
                                 <h5><strong>{{ song.title }}</strong></h5>

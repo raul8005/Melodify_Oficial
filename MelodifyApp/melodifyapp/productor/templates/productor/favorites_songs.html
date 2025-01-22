@@ -56,8 +56,9 @@
                 {% for favorite in favorites %}
                     <div class="col-md-4">
                         <div class="song-card d-flex">
+                            <!-- Corregido: Usar favorite.song.song_cover -->
+                            <img src="{% if favorite.song.song_cover %}{{ favorite.song.song_cover.url }}{% else %}{% static 'img/default_song.jpg' %}{% endif %}" alt="{{ favorite.song.title }}">        
 
-                            <img src="{% static 'img/default_song.jpg' %}" alt="{{ favorite.song.title }}">
                             <div class="song-details">
                                 <h5>{{ favorite.song.title }}</h5>
                                 <p>Álbum: {{ favorite.song.album.title }}</p>
